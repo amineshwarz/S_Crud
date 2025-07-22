@@ -7,19 +7,43 @@
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background:rgb(165, 163, 163); padding: 2px 6px; }
 </style>
+{# pour afficher le message en js pour la creation de contenu  #}
+        {% for message in app.flashes('notice') %} 
+            <div class='alert alert-success'>
+                {{ message }}
+            </div>
+        {% endfor %}
+        
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Hello {{ controller_name }}! </h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Applications/MAMP/htdocs/Symphony_crud/S_Crud/src/Controller/HomePageController.php</code></li>
-        <li>Your template at <code>/Applications/MAMP/htdocs/Symphony_crud/S_Crud/templates/home_page/index.html.twig</code></li>
-
-        <li>Yo Yo Yo </li>
-
-        <div class="bg-danger">.  je m'appel Arnaud</div>
-        <div class="bg-danger">.  je m'appel Amine</div>
-    </ul>
+    Ce cours est presenté par les deux Pirate connu dans le monde entier :
+    
+        <div class="bg-primary">   Arnaud</div>
+        <div class="bg-danger">   Amine</div>
+        
+        <table class="table table-striped-columns">
+            <thead>
+                <tr>
+                <th scope="col">ID</th>
+                <th scope="col">TITLE</th>
+                <th scope="col">CONTENT</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for data in datas %}
+                <tr>
+                <th scope="row"> {{data.id}}</th>
+                <td> {{data.title}}</td>
+                <td> {{data.content}}</td>
+                <td>
+                <a href="{{ path('app_edit_form', {'id': data.id}) }}" class= 'btn btn-warning'>Modifier</a>
+                <a href="{{ path('app_delete_page', {'id': data.id}) }}" class= 'btn btn-danger' onclick="return confirm('Es-tu sûr de vouloir supprimer cet élément ?');">Supprimer</a>
+                </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+            <a href="{{ path('app_create_form') }}" class= 'btn btn-success'>Ajouter un autre Arnaud</a>
 </div>
 {% endblock %}
